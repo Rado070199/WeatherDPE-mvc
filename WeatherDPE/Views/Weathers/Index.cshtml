@@ -16,32 +16,38 @@
     <div class="container">
         <h1 class="text-center mb-4">Pogoda w Poznaniu</h1>
         <div class="card p-4">
-            <div class="row">
-                <div class="col-4">
-                    <p class="mb-1">Data:</p>
-                    <p>@Model.Date</p>
+        @if (Model != null)
+        {
+                <div class="row">
+                    <div class="col-4">
+                        <p class="mb-1">Data:</p>
+                        <p>@Model.Date</p>
+                    </div>
+                    <div class="col-4">
+                        <p class="mb-1">Temperatura:</p>
+                        <p>@Model.Temperature °C</p>
+                    </div>
+                    <div class="col-4">
+                        <p class="mb-1">Ciśnienie:</p>
+                        <p>@Model.Pressure Pa</p>
+                    </div>
                 </div>
-                <div class="col-4">
-                    <p class="mb-1">Temperatura:</p>
-                    <p>@Model.Temperature °C</p>
+                <div class="row">
+                    <div class="col-4">
+                        <p class="mb-1">Prędkość wiatru:</p>
+                        <p>@Model.WindSpeed Km/H</p>
+                    </div>
+                    <div class="col-8">
+                        <img class="rounded-circle" src="@($"https://openweathermap.org/img/wn/{@Model.Icon}.png")"
+                             alt="@Model.Date" style="max-width: 150px" />
+                    </div>
                 </div>
-                <div class="col-4">
-                    <p class="mb-1">Ciśnienie:</p>
-                    <p>@Model.Pressure Pa</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <p class="mb-1">Prędkość wiatru:</p>
-                    <p>@Model.WindSpeed Km/H</p>
-                </div>
-                <div class="col-8">
-                    <img class="rounded-circle" src="@($"https://openweathermap.org/img/wn/{@Model.Icon}.png")"
-                         alt="@Model.Date" style="max-width: 150px" />
-                </div>
-            </div>
-        </div>
-        <form method="post" asp-action="Index">
+        }
+        else
+        {
+            <p>Brak danych pogodowych.</p>
+        }
+        <form method="post" asp-action="Create">
             <input type="submit" name="submit" value="Pobierz" class="btn btn-primary mt-3" />
         </form>
     </div>

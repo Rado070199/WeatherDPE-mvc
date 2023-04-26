@@ -21,6 +21,15 @@ namespace WeatherDPE.Controllers
 
         public IActionResult Index()
         {
+            // pobranie obiektu z największym ID
+            var latestWeatherData = _service.GetLatestAsync().Result;
+
+            return View(latestWeatherData);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create()
+        {
             string apiKey = "d8f0585898c692c1e91dfcdcd7614c70";
             double lat = 52.4069;
             double lon = 16.9299;
@@ -52,11 +61,7 @@ namespace WeatherDPE.Controllers
                     _service.AddAsync(weatherData).Wait();
                 }
             }
-
-            // pobranie obiektu z największym ID
-            var latestWeatherData = _service.GetLatestAsync().Result;
-
-            return View(latestWeatherData);
+            return RedirectToAction(nameof(Index));
         }
 
 

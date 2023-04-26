@@ -18,12 +18,13 @@ namespace WeatherDPE.Services
             var lastWeatherData = await _context.Weathers.OrderByDescending(w => w.Id).FirstOrDefaultAsync();
 
             // jeśli nie ma zapisanych żadnych danych lub ostatni zapisany czas jest wcześniejszy niż teraz minus jedna godzina
-            if (lastWeatherData == null || lastWeatherData.Date < DateTime.Now.AddHours(-1))
+            if (lastWeatherData == null || lastWeatherData.Date.Date < DateTime.Now.Date || lastWeatherData.Date.Hour != DateTime.Now.Hour)
             {
                 await _context.Weathers.AddAsync(waterdata);
                 await _context.SaveChangesAsync();
             }
-   
+
+
         }
         public async Task<WeatherData> GetByDateAsync(DateTime date)
         {
